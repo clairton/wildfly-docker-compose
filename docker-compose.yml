@@ -1,0 +1,15 @@
+# Container Auth
+wildfly:
+  image: clairton/wildfly
+  ports:
+   - "8080:8080"
+   - "8443:8443"
+  volumes:
+   - ./deploy/:/opt/wildfly/wildfly/standalone/deployments/
+   - ./log/:/opt/wildfly/wildfly/standalone/log/
+  environment:
+   JAVA_OPTS: >
+              -Xmx512m -Xms128m  -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
+              -Djboss.modules.system.pkgs="org.jboss.byteman"
+              -Djava.net.preferIPv4Stack=true -Djava.awt.headless=true -Duser.timezone="America/Sao_Paulo"
+              -Duser.language=pt_BR -Duser.country=BR -Dbr.eti.clairton.migrator.migrate=${MIGRATOR_MIGRATE}
